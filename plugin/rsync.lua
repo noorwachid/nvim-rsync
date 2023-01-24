@@ -32,14 +32,20 @@ vim.api.nvim_create_user_command('RsyncUp', function()
         return print('Remote path is not defined')
     end
 
-    local target = vim.fn.expand('%')
-    local from = cwd .. '/' .. target
-    local to = config.path .. '/' .. target
+    local target_fp = vim.fn.expand('%:p')
+    local target = target_fp:gsub(cwd, '')
+
+    local from = cwd .. target
+    local to = config.path ..  target
 
 	print('syncing up ' .. target)
 
     vim.fn.jobstart({'rsync', '-z', from, config.username .. '@' .. config.host .. ':' .. to}, {
         stdout_buffered = true,
+        on_exit = function()
+            print('synced ' .. target)
+        end,
+
         on_stdout = function(_, data)
             if data and data[1] ~= '' then
                 print('synced ' .. target)
