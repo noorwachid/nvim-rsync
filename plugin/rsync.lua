@@ -71,13 +71,13 @@ local function execute_hop(table, hop_index)
 
     vim.fn.jobstart({'rsync', '-z', from, hop.username .. '@' .. hop.host .. ':' .. to}, {
       on_exit = function()
-          print('synced ' .. target)
+          print('Synced ' .. target)
       end,
 
       stdout_buffered = true,
       on_stdout = function(_, data)
           if data and data[1] ~= '' then
-              print('synced ' .. target)
+              print('Synced ' .. target)
               table.concat(data, '\n')
           end
       end,
@@ -85,7 +85,7 @@ local function execute_hop(table, hop_index)
       stderr_buffered = true,
       on_stderr = function(_, data)
           if data and data[1] ~= '' then
-              print('failed to sync ' .. target)
+              print('Failed to sync ' .. target)
               table.concat(data, '\n')
           end
       end
@@ -117,4 +117,4 @@ vim.api.nvim_create_user_command('RsyncUp', function(context)
 
     return execute_hop(config.table, context.args)
 
-end, { desc = 'remote sync upstream', nargs = '?' })
+end, { desc = 'Remote sync upstream', nargs = '?' })
