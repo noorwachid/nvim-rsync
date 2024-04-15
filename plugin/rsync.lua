@@ -44,13 +44,13 @@ local function is_hop_valid(hop)
     return true
 end
 
-local function execute_hop(table, hop_index)
-    if not table[hop_index] then
+local function execute_hop(map, hop_index)
+    if not map[hop_index] then
         print('Hop with index ' .. hop_index .. ' is not defined')
         return false
     end
 
-    local hop = table[hop_index]
+    local hop = map[hop_index]
 
     if not is_hop_valid(hop) then
         return
