@@ -57,8 +57,7 @@ local function execute_hop(map, hop_index)
     end
 
     local cwd = vim.fn.getcwd()
-    local target_fp = vim.fn.expand('%:p')
-    local target = target_fp:gsub(cwd, '')
+    local target = vim.fn.expand('%:p'):sub(cwd:len() + 1)
 
     local from = cwd .. target
     local to = hop.path ..  target
